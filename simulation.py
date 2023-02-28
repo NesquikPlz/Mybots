@@ -1,9 +1,6 @@
-import pyrosim.pyrosim as pyrosim
 import pybullet_data
 import pybullet as p
 from time import sleep
-import numpy
-import constants as c
 from world import WORLD
 from robot import ROBOT
 
@@ -19,6 +16,7 @@ class SIMULATION:
         for t in range(1000):
             p.stepSimulation()
             self.robot.Sense(t)
+            self.robot.Think()
             self.robot.Act(t)
             sleep(0.03)
 
