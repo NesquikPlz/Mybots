@@ -98,6 +98,8 @@ def Prepare_Joint_Dictionary(bodyID):
 
         jointName = jointInfo[1]
 
+        jointName = jointName.decode("utf-8")
+
         jointNamesToIndices[jointName] = jointIndex
 
 def Prepare_To_Simulate(bodyID):
