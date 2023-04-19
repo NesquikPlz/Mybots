@@ -54,5 +54,5 @@ class PARALLEL_HILL_CLIMBER :
     def Show_Best(self):
         results = [x.fitness for x in self.parents.values()]
         bestSolution = results.index(min(results))
-        # print(self.parents[bestSolution].fitness)
+        print(self.parents[bestSolution].fitness)
         self.parents[bestSolution].Start_Simulation("GUI")
