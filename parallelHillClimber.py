@@ -13,12 +13,14 @@ class PARALLEL_HILL_CLIMBER :
         for i in range(c.populationSize) :
             self.parents[i] = SOLUTION(self.nextAvailableID)
             self.nextAvailableID += 1
+        self.resultMatrix = np.zeros((c.numberOfGenerations, c.populationSize))
 
     def Evolve(self) :
         self.Evaluate(self.parents)
         for currentGeneration in range(c.numberOfGenerations):
             print("---------\nGeneration : ", currentGeneration)
             self.Evolve_For_One_Generation()
+            self.resultMatrix[currentGeneration] = [x.fitness for x in self.parents.values()]
 
     def Evaluate(self, solutions):
         for i in solutions.keys() :
@@ -57,4 +59,9 @@ class PARALLEL_HILL_CLIMBER :
         # bestSolution = results.index(min(results))
         bestSolution = results.index(max(results))
         print(self.parents[bestSolution].fitness)
+        self.parents[bestSolution].save_brain()
         self.parents[bestSolution].Start_Simulation("GUI")
+
+    def save_resultMatrix(self):
+        np.savetxt("ResultB.txt", self.resultMatrix)
+        np.save("ResultB.npy", self.resultMatrix)
