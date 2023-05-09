@@ -3,6 +3,9 @@ import pybullet as p
 from time import sleep
 from world import WORLD
 from robot import ROBOT
+import numpy as np
+import constants as c
+import os
 
 class SIMULATION:
     def __init__(self, directOrGUI, solutionID):
@@ -32,3 +35,6 @@ class SIMULATION:
 
     def __del__(self):
         p.disconnect()
+
+    def Get_Footprint(self):
+        self.robot.Get_footprint()

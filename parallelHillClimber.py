@@ -8,6 +8,7 @@ class PARALLEL_HILL_CLIMBER :
     def __init__(self):
         os.system("del brain*.nndf")
         os.system("del fitness*.nndf")
+        os.system("del data/footprints*.npy")
         self.parents = {}
         self.nextAvailableID = 0
         for i in range(c.populationSize) :
@@ -60,8 +61,11 @@ class PARALLEL_HILL_CLIMBER :
         bestSolution = results.index(max(results))
         print(self.parents[bestSolution].fitness)
         self.parents[bestSolution].save_brain()
+        # self.parents[bestSolution].Save_footprint()
         self.parents[bestSolution].Start_Simulation("GUI")
+        # self.footprints = self.parents[bestSolution].Get_Footprint()
 
     def save_resultMatrix(self):
-        np.savetxt("ResultB.txt", self.resultMatrix)
-        np.save("ResultB.npy", self.resultMatrix)
+        # np.savetxt("ResultB.txt", self.resultMatrix)
+        np.save("ResultA.npy", self.resultMatrix)
+        # np.save("ResultB_Footprint.npy", self.footprints)

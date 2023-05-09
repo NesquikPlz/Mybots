@@ -5,6 +5,7 @@ from sensor import SENSOR
 from motor import MOTOR
 import os
 import constants as c
+import numpy
 
 class ROBOT:
     def __init__(self, solutionID):
@@ -61,3 +62,22 @@ class ROBOT:
         f.write(str(zPosition))
         f.close()
         os.system(f"rename {tmpFileName} {fitnessFileName}")
+        # os.chmod(f"{fitnessFileName}", stat.S_IRWXO)
+
+    def Save_Footprint(self):
+        for linkName in c.sensor_link_name :
+                self.sensors[linkName].Save_Values(self.solutionID)
+
+    def Get_Sensor_Neuron_Names(self):
+        return pyrosim.linkNamesToIndices
+
+    def Get_footprint(self):
+        self.Save_Footprint()
+        footprint = numpy.zeros(1000)
+        for name in c.sensor_link_name :
+            filename = "data/" + str(name) + "SensorValues"+str(self.solutionID)+".npy"
+            values = numpy.load(filename)
+            footprint = numpy.concatenate((footprint, values), axis = 0)
+            os.system(f"del {filename}")
+        numpy.save("data/footprints" + str(self.solutionID) +".npy", footprint)
+        print("footprint saved")
